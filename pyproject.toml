@@ -1,6 +1,6 @@
 [project]
 name = "net-misc"
-version = "0.1.2.1"
+version = "0.1.3"
 description = "Add misc utils for networking calculations"
 readme = "README.md"
 requires-python = ">=3.13"
