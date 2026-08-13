@@ -31,7 +31,7 @@ wheels = [
 
 [[package]]
 name = "net-misc"
-version = "0.1.1.3"
+version = "0.1.2"
 source = { editable = "." }
 
 [package.optional-dependencies]
