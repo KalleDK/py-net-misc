@@ -1,0 +1,23 @@
+_commit: v1.3.16
+_src_path: https://github.com/KalleDK/copier-python.git
+copyright_date: '2026'
+copyright_holder: Kalle M. Krog Aagaard
+copyright_holder_email: git@k-moeller.dk
+copyright_license: MIT License
+email: git@k-moeller.dk
+full_name: Kalle M. Krog Aagaard
+gh_user: KalleDK
+git_slug: py-net-misc
+module_slug: net_misc
+pip_slug: net-misc
+project_description: Add misc utils for networking calculations
+project_name: Net Misc
+project_version: 0.1.0
+python_version: '3.13'
+use_bumpversion: true
+use_defaults: false
+use_editorconfig: false
+use_github: true
+use_precommit: true
+use_ruff: true
+use_taskfile: true
