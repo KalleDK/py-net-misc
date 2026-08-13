@@ -93,7 +93,7 @@ class MacFormat(enum.StrEnum):
         _source_type: Any,
         _handler: GetCoreSchemaHandler,
     ) -> CoreSchema:
-        return _get_pydantic_core_schema(self, _source_type, _handler)
+        return get_pydantic_core_schema(self, _source_type, _handler)
 
 
 DEFAULT_MAC_FORMAT = MacFormat.COLON
@@ -134,13 +134,13 @@ class MacAddress(bytes):
         _source_type: Any,
         _handler: GetCoreSchemaHandler,
     ) -> CoreSchema:
-        return _get_pydantic_core_schema(DEFAULT_MAC_FORMAT, _source_type, _handler)
+        return get_pydantic_core_schema(DEFAULT_MAC_FORMAT, _source_type, _handler)
 
 
 # region Pydantic Core Schema
 
 
-def _get_pydantic_core_schema(
+def get_pydantic_core_schema(
     format_type: MacFormat,
     _source_type: Any,
     _handler: GetCoreSchemaHandler,
