@@ -22,11 +22,18 @@ Homepage = "https://github.com/KalleDK/py-net-misc"
 Documentation = "https://github.com/KalleDK/py-net-misc"
 Repository = "https://github.com/KalleDK/py-net-misc.git"
 
+[project.optional-dependencies]
+pydantic = [
+    "pydantic-core>=2.46.4",
+]
+
 [dependency-groups]
 test = [
     "pytest>=9.0.2",
 ]
-stubs = []
+stubs = [
+    "pydantic>=2.13.4",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]
