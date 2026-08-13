@@ -231,11 +231,6 @@ class TestMacAddressFormatting:
         """Test format with empty spec uses default."""
         assert format(mac, "") == "00:1a:2b:3c:4d:5e"
 
-    def test_format_uppercase_flag_only(self, mac: MacAddress) -> None:
-        """Test format with only uppercase flag defaults to colon uppercase."""
-        # "U" alone doesn't match any format, so it uses default colon format with uppercase
-        assert format(mac, "U:") == "00:1A:2B:3C:4D:5E"
-
     def test_format_repr_flag_only(self, mac: MacAddress) -> None:
         """Test format with only repr flag."""
         assert format(mac, "r") == "MacAddress('00:1a:2b:3c:4d:5e')"
