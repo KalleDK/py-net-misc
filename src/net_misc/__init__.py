@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from net_misc.macaddress import MacAddress as MacAddress
+from net_misc.macaddress import MacAddressBase as MacAddressBase
 from net_misc.macaddress import MacFormat as MacFormat
 
 __version__ = "0.1.3"
 
 __all__ = [
-    "MacAddress",
+    "MacAddressBase",
     "MacFormat",
     "__version__",
 ]

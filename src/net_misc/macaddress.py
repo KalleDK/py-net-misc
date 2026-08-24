@@ -61,7 +61,7 @@ class MacFormat(enum.StrEnum):
     DOT = "."
     POUND = "#"
 
-    def serialize(self, value: MacAddress) -> str:
+    def serialize(self, value: MacAddressBase) -> str:
         match self:
             case MacFormat.DASH:
                 # Example: 00-1a-2b-3c-4d-5e
@@ -101,7 +101,7 @@ DEFAULT_MAC_FORMAT = MacFormat.COLON
 # endregion Formatting
 
 
-class MacAddress(bytes):
+class MacAddressBase(bytes):
     __slots__ = ()
 
     def __new__(cls, value: bytes | str) -> Self:
@@ -128,6 +128,8 @@ class MacAddress(bytes):
     def __str__(self) -> str:
         return self.__format__("")
 
+
+class MacAddress(MacAddressBase):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
