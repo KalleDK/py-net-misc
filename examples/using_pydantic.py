@@ -4,16 +4,16 @@ from typing import Annotated
 
 import pydantic
 
-from net_misc import MacAddressBase, MacFormat
+from net_misc import MacAddress, MacFormat
 
 
 class Device(pydantic.BaseModel):
-    mac_address: Annotated[MacAddressBase, MacFormat.DASH]
-    mac_address_extra: MacAddressBase
+    mac_address: Annotated[MacAddress, MacFormat.DASH]
+    mac_address_extra: MacAddress
 
 
 def main():
-    mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+    mac = MacAddress("00:1a:2b:3c:4d:5e")
     device = Device(mac_address=mac, mac_address_extra=mac)
     print(device.model_dump())
     print(device.model_dump(mode="json"))

@@ -4,7 +4,7 @@ import pytest
 
 from net_misc.macaddress import (
     InvalidMacAddressError,
-    MacAddressBase,
+    MacAddress,
     MacFormat,
     validate_mac,
 )
@@ -117,53 +117,53 @@ class TestMacAddressCreation:
 
     def test_create_from_colon_format(self) -> None:
         """Test creating MacAddress from colon-separated string."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
         assert isinstance(mac, bytes)
 
     def test_create_from_dash_format(self) -> None:
         """Test creating MacAddress from dash-separated string."""
-        mac = MacAddressBase("00-1a-2b-3c-4d-5e")
+        mac = MacAddress("00-1a-2b-3c-4d-5e")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
 
     def test_create_from_dot_format(self) -> None:
         """Test creating MacAddress from dot-separated string."""
-        mac = MacAddressBase("001a.2b3c.4d5e")
+        mac = MacAddress("001a.2b3c.4d5e")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
 
     def test_create_from_bytes(self) -> None:
         """Test creating MacAddress from bytes."""
-        mac = MacAddressBase(b"\x00\x1a\x2b\x3c\x4d\x5e")
+        mac = MacAddress(b"\x00\x1a\x2b\x3c\x4d\x5e")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
 
     def test_create_uppercase(self) -> None:
         """Test creating MacAddress from uppercase hex."""
-        mac = MacAddressBase("00:1A:2B:3C:4D:5E")
+        mac = MacAddress("00:1A:2B:3C:4D:5E")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
 
     def test_create_fails_invalid_format(self) -> None:
         """Test creation fails with invalid format."""
         with pytest.raises(InvalidMacAddressError):
-            MacAddressBase("invalid")
+            MacAddress("invalid")
 
     def test_create_fails_wrong_length(self) -> None:
         """Test creation fails with wrong byte length."""
         with pytest.raises(InvalidMacAddressError):
-            MacAddressBase("00:1a:2b:3c:4d")
+            MacAddress("00:1a:2b:3c:4d")
 
     def test_create_fails_invalid_hex(self) -> None:
         """Test creation fails with invalid hex characters."""
         with pytest.raises(InvalidMacAddressError):
-            MacAddressBase("00:1g:2b:3c:4d:5e")
+            MacAddress("00:1g:2b:3c:4d:5e")
 
     def test_create_zero_mac(self) -> None:
         """Test creating zero MAC address."""
-        mac = MacAddressBase("00:00:00:00:00:00")
+        mac = MacAddress("00:00:00:00:00:00")
         assert mac == b"\x00\x00\x00\x00\x00\x00"
 
     def test_create_broadcast_mac(self) -> None:
         """Test creating broadcast MAC address."""
-        mac = MacAddressBase("ff:ff:ff:ff:ff:ff")
+        mac = MacAddress("ff:ff:ff:ff:ff:ff")
         assert mac == b"\xff\xff\xff\xff\xff\xff"
 
 
@@ -171,69 +171,69 @@ class TestMacAddressFormatting:
     """Tests for MacAddress formatting and string output."""
 
     @pytest.fixture
-    def mac(self) -> MacAddressBase:
+    def mac(self) -> MacAddress:
         """Create a MacAddress instance for testing."""
-        return MacAddressBase("00:1a:2b:3c:4d:5e")
+        return MacAddress("00:1a:2b:3c:4d:5e")
 
-    def test_str_default_format(self, mac: MacAddressBase) -> None:
+    def test_str_default_format(self, mac: MacAddress) -> None:
         """Test string representation uses default colon format."""
         assert str(mac) == "00:1a:2b:3c:4d:5e"
 
-    def test_repr_format(self, mac: MacAddressBase) -> None:
+    def test_repr_format(self, mac: MacAddress) -> None:
         """Test repr shows class name and colon format."""
-        assert repr(mac) == "MacAddressBase('00:1a:2b:3c:4d:5e')"
+        assert repr(mac) == "MacAddress('00:1a:2b:3c:4d:5e')"
 
-    def test_format_colon(self, mac: MacAddressBase) -> None:
+    def test_format_colon(self, mac: MacAddress) -> None:
         """Test colon format specification."""
         assert format(mac, ":") == "00:1a:2b:3c:4d:5e"
 
-    def test_format_colon_uppercase(self, mac: MacAddressBase) -> None:
+    def test_format_colon_uppercase(self, mac: MacAddress) -> None:
         """Test colon format with uppercase."""
         assert format(mac, "U:") == "00:1A:2B:3C:4D:5E"
 
-    def test_format_dash(self, mac: MacAddressBase) -> None:
+    def test_format_dash(self, mac: MacAddress) -> None:
         """Test dash format specification."""
         assert format(mac, "-") == "00-1a-2b-3c-4d-5e"
 
-    def test_format_dash_uppercase(self, mac: MacAddressBase) -> None:
+    def test_format_dash_uppercase(self, mac: MacAddress) -> None:
         """Test dash format with uppercase."""
         assert format(mac, "U-") == "00-1A-2B-3C-4D-5E"
 
-    def test_format_dot(self, mac: MacAddressBase) -> None:
+    def test_format_dot(self, mac: MacAddress) -> None:
         """Test dot format specification."""
         assert format(mac, ".") == "001a.2b3c.4d5e"
 
-    def test_format_dot_uppercase(self, mac: MacAddressBase) -> None:
+    def test_format_dot_uppercase(self, mac: MacAddress) -> None:
         """Test dot format with uppercase."""
         assert format(mac, "U.") == "001A.2B3C.4D5E"
 
-    def test_format_pound(self, mac: MacAddressBase) -> None:
+    def test_format_pound(self, mac: MacAddress) -> None:
         """Test pound format specification."""
         assert format(mac, "#") == "00#1a#2b#3c#4d#5e"
 
-    def test_format_pound_uppercase(self, mac: MacAddressBase) -> None:
+    def test_format_pound_uppercase(self, mac: MacAddress) -> None:
         """Test pound format with uppercase."""
         assert format(mac, "U#") == "00#1A#2B#3C#4D#5E"
 
-    def test_format_with_repr_flag_colon(self, mac: MacAddressBase) -> None:
+    def test_format_with_repr_flag_colon(self, mac: MacAddress) -> None:
         """Test format with repr flag."""
-        assert format(mac, "r:") == "MacAddressBase('00:1a:2b:3c:4d:5e')"
+        assert format(mac, "r:") == "MacAddress('00:1a:2b:3c:4d:5e')"
 
-    def test_format_with_repr_flag_dash(self, mac: MacAddressBase) -> None:
+    def test_format_with_repr_flag_dash(self, mac: MacAddress) -> None:
         """Test format with repr flag and dash format."""
-        assert format(mac, "r-") == "MacAddressBase('00-1a-2b-3c-4d-5e')"
+        assert format(mac, "r-") == "MacAddress('00-1a-2b-3c-4d-5e')"
 
-    def test_format_with_repr_flag_uppercase(self, mac: MacAddressBase) -> None:
+    def test_format_with_repr_flag_uppercase(self, mac: MacAddress) -> None:
         """Test format with repr flag and uppercase."""
-        assert format(mac, "rU:") == "MacAddressBase('00:1A:2B:3C:4D:5E')"
+        assert format(mac, "rU:") == "MacAddress('00:1A:2B:3C:4D:5E')"
 
-    def test_format_empty_spec(self, mac: MacAddressBase) -> None:
+    def test_format_empty_spec(self, mac: MacAddress) -> None:
         """Test format with empty spec uses default."""
         assert format(mac, "") == "00:1a:2b:3c:4d:5e"
 
-    def test_format_repr_flag_only(self, mac: MacAddressBase) -> None:
+    def test_format_repr_flag_only(self, mac: MacAddress) -> None:
         """Test format with only repr flag."""
-        assert format(mac, "r") == "MacAddressBase('00:1a:2b:3c:4d:5e')"
+        assert format(mac, "r") == "MacAddress('00:1a:2b:3c:4d:5e')"
 
 
 class TestMacAddressEquality:
@@ -241,44 +241,44 @@ class TestMacAddressEquality:
 
     def test_equality_same_format(self) -> None:
         """Test equality with same format."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("00:1a:2b:3c:4d:5e")
         assert mac1 == mac2
 
     def test_equality_different_format(self) -> None:
         """Test equality with different format input."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("00-1a-2b-3c-4d-5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("00-1a-2b-3c-4d-5e")
         assert mac1 == mac2
 
     def test_equality_bytes_input(self) -> None:
         """Test equality between string and bytes input."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase(b"\x00\x1a\x2b\x3c\x4d\x5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress(b"\x00\x1a\x2b\x3c\x4d\x5e")
         assert mac1 == mac2
 
     def test_equality_raw_bytes(self) -> None:
         """Test equality with raw bytes."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         assert mac == b"\x00\x1a\x2b\x3c\x4d\x5e"
 
     def test_inequality(self) -> None:
         """Test inequality between different MAC addresses."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("ff:ff:ff:ff:ff:ff")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("ff:ff:ff:ff:ff:ff")
         assert mac1 != mac2
 
     def test_hashable(self) -> None:
         """Test that MacAddress is hashable."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("00:1a:2b:3c:4d:5e")
         mac_set = {mac1, mac2}
         assert len(mac_set) == 1
 
     def test_can_be_dict_key(self) -> None:
         """Test that MacAddress can be used as dict key."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("00:1a:2b:3c:4d:5e")
         d = {mac1: "value"}
         assert d[mac2] == "value"
 
@@ -288,26 +288,26 @@ class TestMacAddressIndexing:
 
     def test_indexing(self) -> None:
         """Test indexing into MacAddress."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         assert mac[0] == 0x00
         assert mac[1] == 0x1A
         assert mac[5] == 0x5E
 
     def test_slicing(self) -> None:
         """Test slicing MacAddress."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         assert mac[0:2] == b"\x00\x1a"
         assert mac[2:4] == b"\x2b\x3c"
 
     def test_iteration(self) -> None:
         """Test iteration over MacAddress."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         bytes_list = list(mac)
         assert bytes_list == [0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]
 
     def test_length(self) -> None:
         """Test length of MacAddress."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         assert len(mac) == 6
 
 
@@ -321,46 +321,46 @@ class TestMacFormat:
     """Tests for MacFormat enum and serialization."""
 
     @pytest.fixture
-    def mac(self) -> MacAddressBase:
+    def mac(self) -> MacAddress:
         """Create a MacAddress instance for testing."""
-        return MacAddressBase("00:1a:2b:3c:4d:5e")
+        return MacAddress("00:1a:2b:3c:4d:5e")
 
-    def test_serialize_colon(self, mac: MacAddressBase) -> None:
+    def test_serialize_colon(self, mac: MacAddress) -> None:
         """Test MacFormat.COLON serialization."""
         result = MacFormat.COLON.serialize(mac)
         assert result == "00:1a:2b:3c:4d:5e"
 
-    def test_serialize_colon_uppercase(self, mac: MacAddressBase) -> None:
+    def test_serialize_colon_uppercase(self, mac: MacAddress) -> None:
         """Test MacFormat.COLON_U serialization."""
         result = MacFormat.COLON_U.serialize(mac)
         assert result == "00:1A:2B:3C:4D:5E"
 
-    def test_serialize_dash(self, mac: MacAddressBase) -> None:
+    def test_serialize_dash(self, mac: MacAddress) -> None:
         """Test MacFormat.DASH serialization."""
         result = MacFormat.DASH.serialize(mac)
         assert result == "00-1a-2b-3c-4d-5e"
 
-    def test_serialize_dash_uppercase(self, mac: MacAddressBase) -> None:
+    def test_serialize_dash_uppercase(self, mac: MacAddress) -> None:
         """Test MacFormat.DASH_U serialization."""
         result = MacFormat.DASH_U.serialize(mac)
         assert result == "00-1A-2B-3C-4D-5E"
 
-    def test_serialize_dot(self, mac: MacAddressBase) -> None:
+    def test_serialize_dot(self, mac: MacAddress) -> None:
         """Test MacFormat.DOT serialization."""
         result = MacFormat.DOT.serialize(mac)
         assert result == "001a.2b3c.4d5e"
 
-    def test_serialize_dot_uppercase(self, mac: MacAddressBase) -> None:
+    def test_serialize_dot_uppercase(self, mac: MacAddress) -> None:
         """Test MacFormat.DOT_U serialization."""
         result = MacFormat.DOT_U.serialize(mac)
         assert result == "001A.2B3C.4D5E"
 
-    def test_serialize_pound(self, mac: MacAddressBase) -> None:
+    def test_serialize_pound(self, mac: MacAddress) -> None:
         """Test MacFormat.POUND serialization."""
         result = MacFormat.POUND.serialize(mac)
         assert result == "00#1a#2b#3c#4d#5e"
 
-    def test_serialize_pound_uppercase(self, mac: MacAddressBase) -> None:
+    def test_serialize_pound_uppercase(self, mac: MacAddress) -> None:
         """Test MacFormat.POUND_U serialization."""
         result = MacFormat.POUND_U.serialize(mac)
         assert result == "00#1A#2B#3C#4D#5E"
@@ -378,13 +378,13 @@ class TestMacFormat:
 
     def test_serialize_broadcast_mac(self) -> None:
         """Test serialization of broadcast MAC address."""
-        mac = MacAddressBase("ff:ff:ff:ff:ff:ff")
+        mac = MacAddress("ff:ff:ff:ff:ff:ff")
         result = MacFormat.COLON.serialize(mac)
         assert result == "ff:ff:ff:ff:ff:ff"
 
     def test_serialize_zero_mac(self) -> None:
         """Test serialization of zero MAC address."""
-        mac = MacAddressBase("00:00:00:00:00:00")
+        mac = MacAddress("00:00:00:00:00:00")
         result = MacFormat.COLON.serialize(mac)
         assert result == "00:00:00:00:00:00"
 
@@ -401,7 +401,7 @@ class TestInvalidMacAddressError:
     def test_error_message_invalid_hex(self) -> None:
         """Test error message for invalid hex."""
         with pytest.raises(InvalidMacAddressError) as exc_info:
-            MacAddressBase("00:1g:2b:3c:4d:5e")
+            MacAddress("00:1g:2b:3c:4d:5e")
         error_msg = str(exc_info.value)
         assert "Invalid MAC address" in error_msg
         assert "valid hex string" in error_msg
@@ -409,7 +409,7 @@ class TestInvalidMacAddressError:
     def test_error_message_wrong_length(self) -> None:
         """Test error message for wrong length."""
         with pytest.raises(InvalidMacAddressError) as exc_info:
-            MacAddressBase("00:1a:2b:3c")
+            MacAddress("00:1a:2b:3c")
         error_msg = str(exc_info.value)
         assert "Invalid MAC address" in error_msg
         assert "6 bytes long" in error_msg
@@ -417,14 +417,14 @@ class TestInvalidMacAddressError:
     def test_error_includes_input(self) -> None:
         """Test error message includes the invalid input."""
         with pytest.raises(InvalidMacAddressError) as exc_info:
-            MacAddressBase("invalid")
+            MacAddress("invalid")
         error_msg = str(exc_info.value)
         assert "invalid" in error_msg
 
     def test_error_is_value_error(self) -> None:
         """Test that InvalidMacAddressError is a ValueError."""
         with pytest.raises(ValueError):
-            MacAddressBase("invalid")
+            MacAddress("invalid")
 
 
 # endregion Tests for InvalidMacAddressError
@@ -439,17 +439,17 @@ class TestEdgeCases:
     def test_mac_in_list(self) -> None:
         """Test using MacAddress in a list."""
         macs = [
-            MacAddressBase("00:1a:2b:3c:4d:5e"),
-            MacAddressBase("ff:ff:ff:ff:ff:ff"),
+            MacAddress("00:1a:2b:3c:4d:5e"),
+            MacAddress("ff:ff:ff:ff:ff:ff"),
         ]
         assert len(macs) == 2
-        assert macs[0] == MacAddressBase("00:1a:2b:3c:4d:5e")
+        assert macs[0] == MacAddress("00:1a:2b:3c:4d:5e")
 
     def test_mac_sorting(self) -> None:
         """Test sorting MacAddress instances."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
-        mac2 = MacAddressBase("ff:ff:ff:ff:ff:ff")
-        mac3 = MacAddressBase("80:00:00:00:00:00")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
+        mac2 = MacAddress("ff:ff:ff:ff:ff:ff")
+        mac3 = MacAddress("80:00:00:00:00:00")
         macs = [mac2, mac1, mac3]
         sorted_macs = sorted(macs)
         assert sorted_macs[0] == mac1
@@ -458,24 +458,24 @@ class TestEdgeCases:
 
     def test_mac_address_immutable(self) -> None:
         """Test that MacAddress is immutable (inherits from bytes)."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         with pytest.raises(TypeError):
             mac[0] = 0xFF  # type: ignore[index] # ty: ignore[invalid-assignment]
 
     def test_format_with_whitespace(self) -> None:
         """Test format spec with various whitespace and flags."""
-        mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac = MacAddress("00:1a:2b:3c:4d:5e")
         # The formatter might ignore whitespace in the spec
         assert format(mac, ":") == "00:1a:2b:3c:4d:5e"
 
     def test_leading_zeros_preserved(self) -> None:
         """Test that leading zeros are preserved."""
-        mac = MacAddressBase("00:01:02:03:04:05")
+        mac = MacAddress("00:01:02:03:04:05")
         assert str(mac) == "00:01:02:03:04:05"
 
     def test_mac_address_bytes_compatibility(self) -> None:
         """Test MacAddress works with bytes operations."""
-        mac1 = MacAddressBase("00:1a:2b:3c:4d:5e")
+        mac1 = MacAddress("00:1a:2b:3c:4d:5e")
         mac2 = b"\x00\x1a\x2b\x3c\x4d\x5e"
         assert mac1 + b"\x00" == mac2 + b"\x00"
 

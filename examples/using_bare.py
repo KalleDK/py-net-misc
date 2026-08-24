@@ -1,8 +1,8 @@
-from net_misc import MacAddressBase, MacFormat
+from net_misc import MacAddress, MacFormat
 
 
 def main():
-    mac = MacAddressBase("00:1a:2b:3c:4d:5e")
+    mac = MacAddress("00:1a:2b:3c:4d:5e")
     print(f"Original MAC Address: {mac}")
     print(f"MAC Address in COLON format: {format(mac, MacFormat.COLON)}")
     print(f"MAC Address in DASH format: {format(mac, MacFormat.DASH)}")
