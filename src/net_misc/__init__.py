@@ -3,7 +3,7 @@ from __future__ import annotations
 from net_misc.macaddress import MacAddress as MacAddress
 from net_misc.macaddress import MacFormat as MacFormat
 
-__version__ = "0.1.8.1"
+__version__ = "0.1.9"
 
 __all__ = [
     "MacAddress",
