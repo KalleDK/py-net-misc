@@ -7,6 +7,7 @@ if TYPE_CHECKING:
     from pydantic import GetCoreSchemaHandler
     from pydantic_core import CoreSchema
     from rich.console import Console, ConsoleOptions, RenderResult
+    from rich.measure import Measurement
     from rich.text import Text
 else:
     type GetCoreSchemaHandler = object
