@@ -115,7 +115,7 @@ wheels = [
 
 [[package]]
 name = "net-misc"
-version = "0.1.4"
+version = "0.1.4.1"
 source = { editable = "." }
 
 [package.optional-dependencies]
