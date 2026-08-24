@@ -7,10 +7,8 @@ if TYPE_CHECKING:
     from pydantic import GetCoreSchemaHandler
     from pydantic_core import CoreSchema
     from rich.console import Console, ConsoleOptions, RenderResult
-    from rich.measure import Measurement
     from rich.text import Text
 else:
-    type Measurement = object
     type GetCoreSchemaHandler = object
     type CoreSchema = object
     type Console = object
@@ -20,6 +18,10 @@ else:
         from rich.text import Text
     except ImportError:
         Text = object
+    try:
+        from rich.measure import Measurement
+    except ImportError:
+        Measurement = object
 
 # region Exceptions
 
