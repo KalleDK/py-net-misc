@@ -35,6 +35,7 @@ test = [
 ]
 stubs = [
     "pydantic>=2.14.0b1",
+    "rich>=15.0.0",
 ]
 
 [build-system]

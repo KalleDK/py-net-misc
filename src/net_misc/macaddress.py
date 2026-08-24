@@ -7,8 +7,10 @@ if TYPE_CHECKING:
     from pydantic import GetCoreSchemaHandler
     from pydantic_core import CoreSchema
     from rich.console import Console, ConsoleOptions, RenderResult
+    from rich.measure import Measurement
     from rich.text import Text
 else:
+    type Measurement = object
     type GetCoreSchemaHandler = object
     type CoreSchema = object
     type Console = object
@@ -147,6 +149,9 @@ class MacAddress(bytes):
 
     def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
         yield Text.from_markup(f"{self}", emoji=False)
+
+    def __rich_measure__(self, console: Console, options: ConsoleOptions) -> Measurement:
+        return Measurement(12, 17)  # 6 bytes * 2 hex digits + 5 separators
 
 
 # region Pydantic Core Schema
