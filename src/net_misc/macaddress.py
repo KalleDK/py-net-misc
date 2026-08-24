@@ -6,9 +6,18 @@ from typing import TYPE_CHECKING, Any, Self
 if TYPE_CHECKING:
     from pydantic import GetCoreSchemaHandler
     from pydantic_core import CoreSchema
+    from rich.console import Console, ConsoleOptions, RenderResult
+    from rich.text import Text
 else:
     type GetCoreSchemaHandler = object
     type CoreSchema = object
+    type Console = object
+    type ConsoleOptions = object
+    type RenderResult = object
+    try:
+        from rich.text import Text
+    except ImportError:
+        Text = object
 
 # region Exceptions
 
@@ -135,6 +144,9 @@ class MacAddress(bytes):
         _handler: GetCoreSchemaHandler,
     ) -> CoreSchema:
         return get_pydantic_core_schema(DEFAULT_MAC_FORMAT, _source_type, _handler)
+
+    def __rich_console__(self, console: Console, options: ConsoleOptions) -> RenderResult:
+        yield Text.from_markup(f"{self}", emoji=False)
 
 
 # region Pydantic Core Schema
