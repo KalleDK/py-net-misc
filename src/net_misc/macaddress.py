@@ -18,11 +18,23 @@ else:
     try:
         from rich.text import Text
     except ImportError:
-        Text = object
+
+        class Text:
+            @classmethod
+            def from_markup(cls, markup: str, emoji: bool = False) -> Self:
+                raise NotImplementedError(
+                    "rich is required for using MacAddress with rich please install net-misc[rich]"
+                )
+
     try:
         from rich.measure import Measurement
     except ImportError:
-        Measurement = object
+
+        class Measurement:
+            def __init__(self, minimum: int, maximum: int) -> None:
+                raise NotImplementedError(
+                    "rich is required for using MacAddress with rich please install net-misc[rich]"
+                )
 
 # region Exceptions
 

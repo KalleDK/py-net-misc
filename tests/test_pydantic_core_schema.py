@@ -4,12 +4,11 @@ from typing import Annotated
 
 import pytest
 
-from net_misc.macaddress import MacAddress
+from net_misc.macaddress import MacAddress, MacFormat
 
 try:
     from pydantic import TypeAdapter
 
-    from net_misc.macaddress import MacAddress, MacFormat
 except ImportError:
     pytest.skip("pydantic is not installed", allow_module_level=True)
 
