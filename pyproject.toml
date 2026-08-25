@@ -26,6 +26,9 @@ Repository = "https://github.com/KalleDK/py-net-misc.git"
 pydantic = [
     "pydantic-core>=2.48.0",
 ]
+rich = [
+    "rich>=15.0.0",
+]
 
 [dependency-groups]
 test = [

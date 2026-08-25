@@ -143,6 +143,9 @@ source = { editable = "." }
 pydantic = [
     { name = "pydantic-core" },
 ]
+rich = [
+    { name = "rich" },
+]
 
 [package.dev-dependencies]
 stubs = [
@@ -156,8 +159,11 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pydantic-core", marker = "extra == 'pydantic'", specifier = ">=2.48.0" }]
-provides-extras = ["pydantic"]
+requires-dist = [
+    { name = "pydantic-core", marker = "extra == 'pydantic'", specifier = ">=2.48.0" },
+    { name = "rich", marker = "extra == 'rich'", specifier = ">=15.0.0" },
+]
+provides-extras = ["pydantic", "rich"]
 
 [package.metadata.requires-dev]
 stubs = [
